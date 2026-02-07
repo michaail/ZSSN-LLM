@@ -1,17 +1,15 @@
 from langchain_azure_ai.chat_models import AzureAIChatCompletionsModel
 from langchain_openai import ChatOpenAI
 from azure.core.credentials import AzureKeyCredential
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.prompts.chat import SystemMessagePromptTemplate, HumanMessagePromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.docstore.document import Document
-from langchain.text_splitter import CharacterTextSplitter
+from langchain_community.vectorstores import FAISS
+from langchain_core.documents import Document
+from langchain_text_splitters import CharacterTextSplitter
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from langchain_mcp_adapters.tools import load_mcp_tools
-from langchain.agents import AgentExecutor
-from langchain.agents import create_tool_calling_agent
+from langchain_classic.agents import AgentExecutor, create_tool_calling_agent
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
@@ -130,8 +128,8 @@ class VectorStore:
 
     def add_documents(self, documents, chunk_size=1000, chunk_overlap=200, separator="\n"):
         docs = []
-        text_spliter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap, separator=separator)
-        docs = text_spliter.split_documents(documents)
+        text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap, separator=separator)
+        docs = text_splitter.split_documents(documents)
         self.db.add_documents(docs)
 
     def search(self, prompt, k=5):

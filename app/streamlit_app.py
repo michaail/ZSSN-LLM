@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from time import sleep
 import fitz
-from langchain.docstore.document import Document
+from langchain_core.documents import Document
 from agent import Agent
 import asyncio
 import nest_asyncio
